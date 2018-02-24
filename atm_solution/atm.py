@@ -7,7 +7,6 @@ def withdraw(limit, request):
 
     Arg:
        limit: Money limit within ATM machine during client withdraw operation.
-       withdraw_req: The request a mount by the client.
 
     Returns:
        limit: The updated money limit after client withdraw operations.
