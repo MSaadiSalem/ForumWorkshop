@@ -14,10 +14,7 @@ def withdraw(limit, request):
     """
 
     money_unit = 100
-    while request > 0:
-        if request > limit:
-            print "The requested money is not available at the moment."
-            break
+    while request > 0 and request <= limit:
         if request - money_unit >= 0:
             request -= money_unit
             limit -= money_unit
@@ -33,6 +30,8 @@ def withdraw(limit, request):
             limit -= request
             request = 0
 
+    if request > limit:
+        print "The requested money is above the current blance."
     if request < 0:
         print "The requested money is invalid amount."
 
