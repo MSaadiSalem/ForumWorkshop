@@ -13,10 +13,8 @@ def validate_withdraw(balance, request):
         valid: Holds the validity
     """
 
-    valid = None
-    if request > 0 and request <= balance:
-        valid = True
-    elif request <= 0:
+    valid = True
+    if request <= 0:
         print "The requested money is invalid amount."
         valid = False
     elif request > balance:
@@ -25,7 +23,7 @@ def validate_withdraw(balance, request):
     return valid
 
 
-def withdraw(balance, request, money_units):
+def withdraw(balance, request, money_units=[100, 50, 10, 5, 4, 3, 2, 1]):
     """Calculating how many currency papers the client required within the ATM machine according to current acount balance.
 
     Arg:
@@ -39,7 +37,7 @@ def withdraw(balance, request, money_units):
 
     print "Your current Balance: %d$ \n" % balance
     i = 0
-    while request > 0 and request <= balance:
+    while request > 0:
         count = request // money_units[i]
         for j in range(count):
             print "give %s" % money_units[i]
@@ -49,8 +47,6 @@ def withdraw(balance, request, money_units):
     print "\nThe current balance after operations: %d$ " % balance
     return balance
 
-
-money_units = [100, 50, 10, 5, 4, 3, 2, 1]
 
 # Test cases
 # balance, request = 500, 277
@@ -64,4 +60,4 @@ money_units = [100, 50, 10, 5, 4, 3, 2, 1]
 balance, request = -2, -3
 
 if validate_withdraw(balance, request):
-    withdraw(balance, request, money_units)
+    withdraw(balance, request)
