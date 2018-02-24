@@ -2,46 +2,66 @@
 # -*- coding: utf-8 -*-
 
 
-def withdraw(balance, request):
+def validate_withdraw(balance, request):
+    """Checking if the requested amount is valid within the range of the current balance.
+
+    Args:
+        balance: Current balance.
+        request: The request a mount by the client.
+
+    Returns:
+        valid: Holds the validity
+    """
+
+    valid = None
+    if request > 0 and request <= balance:
+        valid = True
+    elif request <= 0:
+        print "The requested money is invalid amount."
+        valid = False
+    elif request > balance:
+        print "The requested money is above your current blance."
+        valid = False
+    return valid
+
+
+def withdraw(balance, request, money_units):
     """Calculating how many currency papers the client required within the ATM machine according to current acount balance.
 
     Arg:
-       balance: Current balance within befor client withdraw operation.
+       balance: Current balance befor client withdraw operation.
        request: The request a mount by the client.
+       money_units: A list of available currency papers.
 
     Returns:
        balance: The updated account balance after client withdraw operations.
     """
 
     print "Your current Balance: %d$ \n" % balance
-
-    MONEY_UNITS = [100, 50, 10, 5, 4, 3, 2, 1]
     i = 0
-
     while request > 0 and request <= balance:
-        count = request // MONEY_UNITS[i]
+        count = request // money_units[i]
         for j in range(count):
-            print "give %s" % MONEY_UNITS[i]
-        request -= count * MONEY_UNITS[i]
-        balance -= count * MONEY_UNITS[i]
+            print "give %s" % money_units[i]
+        request -= count * money_units[i]
+        balance -= count * money_units[i]
         i += 1
-
-    if request > balance:
-        print "The requested money is above your current blance."
-    if request < 0:
-        print "The requested money is invalid amount."
-
+    print "\nThe current balance after operations: %d$ " % balance
     return balance
 
 
-# Test cases
-# new_balance = withdraw(500, 277)
-# new_balance = withdraw(500, 600)
-# new_balance = withdraw(300, 273)
-# new_balance = withdraw(500, 500)
-# new_balance = withdraw(500, 2)
-# new_balance = withdraw(0, 277)
-# new_balance = withdraw(500, -20)
-new_balance = withdraw(-2, 0)
+money_units = [100, 50, 10, 5, 4, 3, 2, 1]
 
-print "\nThe current balance after operations: %d$ " % new_balance
+# Test cases
+# balance, request = 500, 277
+# balance, request = 500, 600
+# balance, request = 300, 273
+# balance, request = 500, 500
+# balance, request = 500, 2
+# balance, request = 0, 277
+# balance, request = 500, -20
+# balance, request = -2, 0
+balance, request = -2, -3
+
+if validate_withdraw(balance, request):
+    withdraw(balance, request, money_units)
