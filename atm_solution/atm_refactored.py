@@ -7,18 +7,20 @@ class ATM():
         """Construct an ATM machine object.
 
         Args:
-            balance (int): Current available balance  befor withdraw operation
+            balance (int): Current available balance within ATM machine.
             bank_name (str): The bank name which ATM machine belongs.
         """
 
         self.balance = balance
         self.bank_name = bank_name
 
-    def validate_withdraw(self, request):
+    @staticmethod
+    def validate_withdraw(request, balance):
         """Checking if the requested amount is valid within the range of the current balance.
 
         Args:
             request (int): The request a mount by the client.
+            balance (int): Current available balance.
 
         Returns:
             valid (bool): Holds the validity
@@ -28,7 +30,7 @@ class ATM():
         if request <= 0:
             print "The requested amount is invalid.\n"
             valid = False
-        elif request > self.balance:
+        elif request > balance:
             print "The requested amount is above current balance.\n"
             valid = False
         return valid
@@ -39,14 +41,12 @@ class ATM():
         Arg:
            request (int): The request a mount by the client.
            money_units (list): A list of available currency papers.
-
-        Returns:
-           balance (int): The updated account balance after client withdraw operations.
         """
 
         print "\n" + "=" * 25 + "\nWelcome to %s\nCurrent balance = %d$\n" % (
             self.bank_name, self.balance) + "=" * 25
-        valid = self.validate_withdraw(request)
+        valid = self.validate_withdraw(request, self.balance)
+
         i = 0
         while request > 0 and valid:
             count = request // money_units[i]
@@ -55,7 +55,6 @@ class ATM():
             request -= count * money_units[i]
             self.balance -= count * money_units[i]
             i += 1
-        return self.balance
 
 
 # Test cases
