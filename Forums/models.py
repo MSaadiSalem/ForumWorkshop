@@ -2,6 +2,13 @@
 
 
 class Member():
+    """Member related information
+
+    Attributes:
+        member_id (int): A unique member id.
+        posts (list): List of posts id created by the member.
+
+    """
 
     def __init__(self, name, age):
         """Create a new member
@@ -13,19 +20,27 @@ class Member():
 
         self.name = name
         self.age = age
+        self.member_id = 0
+        self.posts = []
 
 
 class Post():
+    """Post related information
 
-    def __init__(self, title, body, member):
+    Attributes:
+        post_id (int): A unique post id.
+    """
+
+    def __init__(self, title, body, member_id):
         """Create a new post
 
         Args:
             title (str): Post title.
             body (str): Post content.
-            member (str): the member who creates the post.
+            member_id (int): Member id who is the creator of the post.
         """
 
         self.title = title
         self.body = body
-        self.member = member
+        self.member_id = member_id
+        self.post_id = 0
