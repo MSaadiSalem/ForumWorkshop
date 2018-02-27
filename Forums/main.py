@@ -3,9 +3,9 @@
 
 import models
 
-member1 = models.Member("Ahmed", 25)
-member2 = models.Member("Ali", 35)
+member1 = models.Member("Member 01", 25)
+member2 = models.Member("Member 02", 35)
 
-post1 = models.Post("Title 01", "Body contents", member1.name)
-post2 = models.Post("Title 02", "Body contents", member2.name)
-post3 = models.Post("Title 03", "Body contents", member1.name)
+post1 = models.Post("Title 01", "Body contents", member1.member_id)
+post2 = models.Post("Title 02", "Body contents", member2.member_id)
+post3 = models.Post("Title 03", "Body contents", member1.member_id)
