@@ -23,6 +23,9 @@ class Member():
         self.member_id = 0
         self.posts = []
 
+    def __str__(self):
+        return "Name: %s\nAge: %d\nMember ID: %s\nPosts:%s " % (self.name, self.age, self.member_id, len(self.posts))
+
 
 class Post():
     """Post related information
@@ -44,3 +47,6 @@ class Post():
         self.body = body
         self.member_id = member_id
         self.post_id = 0
+
+    def __str__(self):
+        return "Title: %s\nContent: %s\nMember ID: %d\nPost ID: %d" % (self.title, self.body, self.member_id, self.post_id)
