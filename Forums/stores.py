@@ -10,19 +10,13 @@ class MemberStore(object):
     """
 
     members = []
+    last_id = 1
 
     def get_all(self):
         return MemberStore.members
 
     def add(self, member):
-        if self.entity_exists(member):
-            MemberStore.members += [member]
-
-    def entity_exists(self, member):
-        exist = False
-        if not member in MemberStore.members:
-            exist = True
-        return exist
+        MemberStore.members += [member]
 
 
 class PostStore(object):
