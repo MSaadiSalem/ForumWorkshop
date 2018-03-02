@@ -27,14 +27,15 @@ class MemberStore(object):
         return exist
 
     def get_by_id(self, id):
+        obj = None
         for member in MemberStore.members:
             if member.member_id == id:
-                return member
-        print "Invalid Member ID."
+                obj = member
+        return obj
 
     def delete(self, id):
         exist = self.get_by_id(id)
-        if exist != None:
+        if exist is not None:
             MemberStore.members.remove(exist)
 
 
@@ -54,12 +55,13 @@ class PostStore(object):
         PostStore.posts += [post]
 
     def get_by_id(self, id):
+        obj = None
         for post in PostStore.posts:
             if post.post_id == id:
-                return post
-        print "Invalid Post ID."
+                obj = post
+        return obj
 
     def delete(self, id):
         exist = self.get_by_id(id)
-        if exist != None:
+        if exist is not None:
             PostStore.posts.remove(exist)
