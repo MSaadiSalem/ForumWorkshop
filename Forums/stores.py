@@ -12,31 +12,46 @@ class MemberStore(object):
     members = []
     last_id = 1
 
-    def get_all(self):
-        return MemberStore.members
+    @classmethod
+    def get_all(cls):
+        return cls.members
 
     def add(self, member):
         MemberStore.members += [member]
-        member.member_id = MemberStore.last_id
+        member.id = MemberStore.last_id
         MemberStore.last_id += 1
 
-    def entity_exists(self, member):
-        exist = True
-        if self.get_by_id(member.member_id) == None:
-            exist = False
-        return exist
-
     def get_by_id(self, id):
+        all_members = self.get_all()
         obj = None
-        for member in MemberStore.members:
-            if member.member_id == id:
+        for member in all_members:
+            if member.id == id:
                 obj = member
+                break
+        return obj
+
+    def get_by_name(self, name):
+        all_members = self.get_all()
+        obj = []
+        for member in all_members:
+            if member.name == name:
+                obj += [member]
         return obj
 
     def delete(self, id):
-        exist = self.get_by_id(id)
-        if exist is not None:
-            MemberStore.members.remove(exist)
+        obj = self.get_by_id(id)
+        MemberStore.members.remove(obj)
+
+    def entity_exists(self, member):
+        exist = True
+        if self.get_by_id(member.id) == None:
+            exist = False
+        return exist
+
+    def update(self, member):
+        obj = self.get_by_id(member.id)
+        obj_index = self.members.index(obj)
+        MemberStore.members[obj_index] = member
 
 
 class PostStore(object):
@@ -47,21 +62,30 @@ class PostStore(object):
     """
 
     posts = []
+    last_id = 1
 
-    def get_all(self):
-        return PostStore.posts
+    @classmethod
+    def get_all(cls):
+        return cls.posts
 
     def add(self, post):
         PostStore.posts += [post]
+        post.id = PostStore.last_id
+        PostStore.last_id += 1
 
     def get_by_id(self, id):
         obj = None
         for post in PostStore.posts:
-            if post.post_id == id:
+            if post.id == id:
                 obj = post
+                break
         return obj
 
     def delete(self, id):
-        exist = self.get_by_id(id)
-        if exist is not None:
-            PostStore.posts.remove(exist)
+        obj = self.get_by_id(id)
+        PostStore.posts.remove(obj)
+
+    def update(self, post):
+        obj = self.get_by_id(post.id)
+        obj_index = self.posts.index(obj)
+        PostStore.posts[obj_index] = post
