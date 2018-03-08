@@ -9,12 +9,14 @@ def create_members():
     member1 = models.Member("Mohammed", 20)
     member2 = models.Member("Omar", 22)
     member3 = models.Member("Abdo", 25)
+    member4 = models.Member("Mohammed", 30)
     print(member1)
     print(member2)
     print(member3)
+    print(member4)
     print("=" * 30)
 
-    return member1, member2, member3
+    return member1, member2, member3, member4
 
 
 def store_should_add_models(instances, instance_store):
@@ -23,20 +25,18 @@ def store_should_add_models(instances, instance_store):
         instance_store.add(instance)
 
 
-def link_posts_to_members(posts):
-    members = stores.MemberStore()
-
-    for post in posts:
-        post_member = members.get_by_id(post.member_id)
-        post_member.posts += [post.id]
-
-
 def stores_should_be_similar():
 
     member_store1 = stores.MemberStore()
     member_store2 = stores.MemberStore()
-    if member_store1.get_all() is member_store2.get_all():
-        print("Same stores elements !")
+    if member_store1.get_all() is not member_store2.get_all():
+        print("Generator: are not the same!")
+    if member_store1.members is member_store2.members:
+        print("But lists: are same stores elements !")
+
+
+def print_members_list(member_list):
+    print(member for member in member_list)
 
 
 def print_all_instances(instance_store):
@@ -63,9 +63,17 @@ def update_should_modify_object(member_store, member3):
         print("member3 and member3_copy are not the same !")
 
     print(member3_copy)
-    member3_copy.name = "john"
+    member3_copy.name = "John"
     member_store.update(member3_copy)
     print(member_store.get_by_id(member3.id))
+
+
+def store_should_get_members_by_name(member_store):
+
+    print("*" * 30)
+    print("Getting by name:")
+    members_by_name_retrieved = member_store.get_by_name("Mohammed")
+    print_members_list(members_by_name_retrieved)
 
 
 def catch_exception_when_deleting():
@@ -75,26 +83,52 @@ def catch_exception_when_deleting():
         print("It should be an existence entity before deleting !")
 
 
-def create_post():
-    post1 = models.Post("Title 01", "Content 01", member1.id)
-    post2 = models.Post("Title 02", "Content 02", member2.id)
-    post3 = models.Post("Title 03", "Content 03", member3.id)
-    post4 = models.Post("Title 04", "Content 04", member1.id)
-    post5 = models.Post("Title 05", "Content 05", member1.id)
+def create_post(members_instances):
+    post1 = models.Post("Agriculture", "Agriculture is amazing", members_instances[0].id)
+    post2 = models.Post("Engineering", "I love engineering", members_instances[0].id)
+
+    post3 = models.Post("Medicine", "Medicine is great", members_instances[1].id)
+    post4 = models.Post("Architecture", "Spectacular art", members_instances[1].id)
+    post5 = models.Post("Astronomy", "Space is awesome", members_instances[1].id)
+
+    post6 = models.Post("Geology", "Earth is our friend", members_instances[2].id)
+    post7 = models.Post("ComputerSci", "Our passion", members_instances[2].id)
+    post8 = models.Post("Algorithms", "Yeah, more of that", members_instances[2].id)
+    post9 = models.Post("Operating Systems", "Ewww", members_instances[2].id)
+
+    post10 = models.Post("Agriculture anything to extend the title :D", "Agriculture is amazing again :D", members_instances[3].id)
+
     print(post1)
     print(post2)
     print(post3)
-    print(post4)
-    print(post5)
     print("=" * 30)
 
-    return post1, post2, post3, post4, post5
+    return post1, post2, post3, post4, post5, post6, post7, post8, post9, post10
+
+
+def store_should_get_members_with_posts(member_store):
+    members_with_posts = member_store.get_members_with_posts()
+
+    for member_with_posts in members_with_posts:
+        print("{0} has posts:".format(member_with_posts))
+        for post in member_with_posts.posts:
+            print("\t{0}".format(post))
+
+        print("=" * 10)
+
+
+def store_should_get_top_two(number):
+    top_two_members = member_store.get_top(number)  # post_store.get_all())
+    for member, posts in top_two_members.items():
+        print "*" * 30, "\n", member
+        for post in posts:
+            print post, "\n", "*" * 30
 
 # Members
 
 
 members_instances = create_members()
-member1, member2, member3 = members_instances
+member1, member2, member3, member4 = members_instances
 
 member_store = stores.MemberStore()
 
@@ -114,18 +148,17 @@ print_all_instances(member_store)
 
 # Posts
 
-post_instances = create_post()
-post1, post2, post3, post4, post5 = post_instances
+posts_instances = create_post(members_instances)
+post1, post2, post3, post4, post5, post6, post7, post8, post9, post10 = posts_instances
 
 post_store = stores.PostStore()
 
-store_should_add_models(post_instances, post_store)
+store_should_add_models(posts_instances, post_store)
 
-print_all_instances(post_store)
+store_should_get_members_with_posts(member_store)
 
-# Link Posts to Members
+store_should_get_top_two(2)  # member_store, post_store)
 
-link_posts_to_members(post_store.posts)
-
-
-print_all_instances(member_store)
+######
+posts_by_title = post_store.get_by_title("Agriculture")
+print "by title:", [post_title for post_title in posts_by_title]
