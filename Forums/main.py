@@ -106,8 +106,8 @@ def create_post(members_instances):
     return post1, post2, post3, post4, post5, post6, post7, post8, post9, post10
 
 
-def store_should_get_members_with_posts(member_store):
-    members_with_posts = member_store.get_members_with_posts()
+def store_should_get_members_with_posts(member_store, post_store):
+    members_with_posts = member_store.get_members_with_posts(post_store.get_all())
 
     for member_with_posts in members_with_posts:
         print("{0} has posts:".format(member_with_posts))
@@ -117,11 +117,12 @@ def store_should_get_members_with_posts(member_store):
         print("=" * 10)
 
 
-def store_should_get_top_two(number):
-    top_two_members = member_store.get_top(number)  # post_store.get_all())
-    for member, posts in top_two_members.items():
-        print "*" * 30, "\n", member
-        for post in posts:
+def store_should_get_top_two(member_store, post_store):
+    top_two_members = member_store.get_top()
+    print "\nTop Two Members\n"
+    for member_with_posts in top_two_members:
+        print "*" * 30, "\n", member_with_posts
+        for post in member_with_posts.posts:
             print post, "\n", "*" * 30
 
 # Members
@@ -146,6 +147,8 @@ catch_exception_when_deleting()
 
 print_all_instances(member_store)
 
+store_should_get_members_by_name(member_store)
+
 # Posts
 
 posts_instances = create_post(members_instances)
@@ -155,10 +158,10 @@ post_store = stores.PostStore()
 
 store_should_add_models(posts_instances, post_store)
 
-store_should_get_members_with_posts(member_store)
+store_should_get_members_with_posts(member_store, post_store)
 
-store_should_get_top_two(2)  # member_store, post_store)
+store_should_get_top_two(member_store, post_store)
 
 ######
-posts_by_title = post_store.get_by_title("Agriculture")
-print "by title:", [post_title for post_title in posts_by_title]
+# posts_by_title = post_store.get_by_title("Agriculture")
+# print "by title:", [post_title for post_title in posts_by_title]
