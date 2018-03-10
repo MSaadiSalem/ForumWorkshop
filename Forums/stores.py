@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import collections
+import itertools
 
 
 class MemberStore(object):
     """Manipulate the principle operation on members.
 
     Attributes:
-        members (list) = Store members objects.
+        members (list): Store members objects.
+        last_id (int): A counter that holds last added member object id.
     """
 
     members = []
@@ -36,43 +37,33 @@ class MemberStore(object):
         all_members = self.get_all()
         return (member for member in all_members if member.name == name)
 
-    def get_members_with_posts(self):
-        """Assign each member to his posts
-
-        Returns:
-            member_posts (dict): Ordered dictionary contains members with their posts.
-        """
-        all_members = self.get_all()
-        members_posts = collections.OrderedDict()
-        for member in all_members:
-            members_posts[member] = self.get_member_posts(member)
-        return members_posts
-
-    def get_member_posts(self, member):
-        return [PostStore().get_by_id(post_id) for post_id in member.posts]
-
-    def get_top(self, list_length):
-        """A list top members wrote posts
+    def get_members_with_posts(self, posts):
+        """Assign each member to his/her posts
 
         Args:
-            list_length (int): The length of top list members
+            posts (Post): An instance of post class.
 
         Returns:
-            top_list (dict): Descending sorted ordered dictionary contains top list members.
+            all_members (list): An updated members list associated their posts objects.
         """
-        posts = [post.member_id for post in PostStore().get_all()]
-        post_member_count = collections.Counter(posts)
-        top_list_member_id = reversed(collections.OrderedDict(
-            sorted(post_member_count.items(), key=lambda t: t[1])))
-        top_list = collections.OrderedDict()
-        count = 0
-        for id in top_list_member_id:
-            if count >= list_length:
-                break
-            member = self.get_by_id(id)
-            top_list[member] = self.get_member_posts(member)
-            count += 1
-        return top_list
+
+        all_members = self.get_all()
+        for member, post in itertools.product(all_members, posts):
+            if post.member_id == member.id:
+                member.posts.append(post)
+        return all_members
+
+    def get_top(self):
+        """A list top members wrote posts
+
+        Returns:
+            all_members (list): Descending sorted ordered list contains top members.
+        """
+
+        all_members = self.get_all()
+        all_members = list(all_members)
+        all_members.sort(key=lambda member: len(member.posts), reverse=True)
+        return all_members[:2]
 
     def delete(self, id):
         obj = self.get_by_id(id)
@@ -94,7 +85,8 @@ class PostStore(object):
     """Manipulate the principle operation on members.
 
     Attributes:
-        posts (list) = Store posts objects.
+        posts (list): Store posts objects.
+        last_id (int): A counter that holds last added post object id.
     """
 
     posts = []
@@ -108,8 +100,6 @@ class PostStore(object):
         PostStore.posts += [post]
         post.id = PostStore.last_id
         PostStore.last_id += 1
-        post_member = MemberStore().get_by_id(post.member_id)
-        post_member.posts += [post.id]
 
     def get_by_id(self, id):
         all_posts = self.get_all()
