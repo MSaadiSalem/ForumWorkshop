@@ -1,8 +1,10 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
+import datetime
 
-class Member():
+
+class Member(object):
     """Member related information
 
     Attributes:
@@ -28,7 +30,7 @@ class Member():
         return "Name: %s\nAge: %d\nMember ID: %s\nPosts:%s " % (self.name, self.age, self.id, len(self.posts))
 
 
-class Post():
+class Post(object):
     """Post related information
 
     Attributes:
@@ -48,6 +50,7 @@ class Post():
         self.body = body
         self.member_id = member_id
         self.id = 0
+        self.date = datetime.datetime.now()
 
     def __str__(self):
-        return "Title: %s\nContent: %s\nMember ID: %d\nPost ID: %d" % (self.title, self.body, self.member_id, self.id)
+        return "Title: %s\nContent: %s\nMember ID: %d\nPost ID: %d\nDate/Time: %s" % (self.title, self.body, self.member_id, self.id, self.date.strftime("%a %d-%m-%Y %H:%M:%S"))
