@@ -1,6 +1,8 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
+import time
+
 import models
 import stores
 
@@ -36,7 +38,9 @@ def stores_should_be_similar():
 
 
 def print_members_list(member_list):
-    print(member for member in member_list)
+    for member in member_list:
+        print member
+    print"=-" * 15
 
 
 def print_all_instances(instance_store):
@@ -70,7 +74,7 @@ def update_should_modify_object(member_store, member3):
 
 def store_should_get_members_by_name(member_store):
 
-    print("*" * 30)
+    print("=-" * 15)
     print("Getting by name:")
     members_by_name_retrieved = member_store.get_by_name("Mohammed")
     print_members_list(members_by_name_retrieved)
@@ -85,16 +89,25 @@ def catch_exception_when_deleting():
 
 def create_post(members_instances):
     post1 = models.Post("Agriculture", "Agriculture is amazing", members_instances[0].id)
+    time.sleep(5)
     post2 = models.Post("Engineering", "I love engineering", members_instances[0].id)
+    time.sleep(5)
 
     post3 = models.Post("Medicine", "Medicine is great", members_instances[1].id)
+    time.sleep(5)
     post4 = models.Post("Architecture", "Spectacular art", members_instances[1].id)
+    time.sleep(5)
     post5 = models.Post("Astronomy", "Space is awesome", members_instances[1].id)
+    time.sleep(5)
 
     post6 = models.Post("Geology", "Earth is our friend", members_instances[2].id)
+    time.sleep(5)
     post7 = models.Post("ComputerSci", "Our passion", members_instances[2].id)
+    time.sleep(5)
     post8 = models.Post("Algorithms", "Yeah, more of that", members_instances[2].id)
+    time.sleep(5)
     post9 = models.Post("Operating Systems", "Ewww", members_instances[2].id)
+    time.sleep(5)
 
     post10 = models.Post("Agriculture anything to extend the title :D", "Agriculture is amazing again :D", members_instances[3].id)
 
@@ -110,14 +123,14 @@ def store_should_get_members_with_posts(member_store, post_store):
     members_with_posts = member_store.get_members_with_posts(post_store.get_all())
 
     for member_with_posts in members_with_posts:
-        print("{0} has posts:".format(member_with_posts))
+        print("Member Info:\n{0}\n{1} has posts:".format(member_with_posts, member_with_posts.name))
         for post in member_with_posts.posts:
-            print("\t{0}".format(post))
+            print("\n{0}".format(post))
 
-        print("=" * 10)
+        print("=*" * 15)
 
 
-def store_should_get_top_two(member_store, post_store):
+def store_should_get_top_two(member_store):
     top_two_members = member_store.get_top()
     print "\nTop Two Members\n"
     for member_with_posts in top_two_members:
@@ -160,8 +173,13 @@ store_should_add_models(posts_instances, post_store)
 
 store_should_get_members_with_posts(member_store, post_store)
 
-store_should_get_top_two(member_store, post_store)
+store_should_get_top_two(member_store)
 
 ######
 # posts_by_title = post_store.get_by_title("Agriculture")
 # print "by title:", [post_title for post_title in posts_by_title]
+
+posts_by_dates = post_store.get_post_by_date()
+print "Posts by date in descending order:"
+for post in posts_by_dates:
+    print post
