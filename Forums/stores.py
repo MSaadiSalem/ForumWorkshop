@@ -34,9 +34,11 @@ class BaseStore(object):
         return exist
 
     def update(self, item_instance):
-        obj = self.get_by_id(item_instance.id)
-        obj_index = self._data_provider.index(obj)
-        self._data_provider[obj_index] = item_instance
+        all_instances = self.get_all()
+        for index, instance in enumerate(all_instances):
+            if instance.id == item_instance.id:
+                self._data_provider[index] = item_instance
+                break
 
     def delete(self, id):
         item_instance = self.get_by_id(id)
