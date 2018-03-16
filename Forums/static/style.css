@@ -1,0 +1,57 @@
+body{
+      margin:2%;
+      }
+
+body, .main-active{
+                    background: #e4d2d2;
+                    color: #000;
+                    }
+
+header,footer, .main-nav{
+                          text-align: center;
+                          }
+
+header{
+        background: #62383C;
+        opacity: 0.7;
+        color: #fff;
+        border-style: double none;
+        border-color: #fff;
+        }
+
+span, .main-nav{
+                 font-size: 135%;
+                 }
+
+nav{
+     font-style: italic;
+     }
+
+footer{
+        margin: 1%;
+        border-top: solid;
+        border-color: #e0e2ef;
+        }
+
+.main-active, .sub-active{
+                           font-style: normal;
+                           }
+
+.main-nav{
+           font-variant: small-caps;
+           margin: 1%;
+           }
+
+.sub-nav{
+          font-size: 120%;
+          }
+
+.topics, .sub-active{
+                      background: #e0e2ef;
+                      padding: 5px;
+                      margin:0 10px;
+                      }
+
+.member{
+         font-size:75%;
+         }
