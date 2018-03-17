@@ -23,25 +23,10 @@
                     <a class="sub-links" href="">My Topics</a>
                 </nav>
             </section>
-            <section class="topics">
-                <p><cite><a href="">Title of Topic01</a></cite>
-                    <br><span class="member">Member01</span></p>
-
-                <p><cite><a href="">Title of Topic02</a></cite>
-                    <br><span class="member">Member21</span></p>
-
-                <p><cite><a href="">Title of Topic03</a></cite>
-                    <br><span class="member">Member05</span></p>
-
-                <p><cite><a href="">Title of Topic04</a></cite>
-                    <br><span class="member">Member07</span></p>
-
-                <p><cite><a href="">Title of Topic05</a></cite>
-                    <br><span class="member">Member50</span></p>
-
-                <p><cite><a href="">Title of Topic06</a></cite>
-                    <br><span class="member">Member42</span></p>
-
+            <section class="topics">{% for post in posts %}
+                <p><cite><a href="">{{post.title}}</a></cite>
+                    <br><span class="member">Member01 posted on {{post.date.strftime("%a %d-%m-%Y %H:%M")}}</span></p>
+                {% endfor %}
             </section>
         </main>
         <footer>
