@@ -55,3 +55,9 @@ footer{
 .member{
          font-size:75%;
          }
+
+p{
+   background: #e4d0d0;
+   margin: 1%;
+   padding: 1%;
+   }

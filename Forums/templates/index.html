@@ -23,9 +23,13 @@
                     <a class="sub-links" href="">My Topics</a>
                 </nav>
             </section>
-            <section class="topics">{% for post in posts %}
-                <p><cite><a href="">{{post.title}}</a></cite>
-                    <br><span class="member">Member01 posted on {{post.date.strftime("%a %d-%m-%Y %H:%M")}}</span></p>
+            <section class="topics">
+                {% for post in posts %}
+                <p>
+                    <cite><a href="">{{post.title}}</a></cite>
+                    <br><span class="member">Member01 posted on {{post.date.strftime("%a %d-%m-%Y %H:%M")}}
+                    </span>
+                </p>
                 {% endfor %}
             </section>
         </main>
