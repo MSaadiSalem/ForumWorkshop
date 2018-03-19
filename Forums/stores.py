@@ -90,8 +90,6 @@ class MemberStore(BaseStore):
         for i in range(number_of_top):
             yield all_members[i]
 
-        # return ([members for members in members_with_posts] for i in range(number_of_top))
-
 
 class PostStore(BaseStore):
     """Manipulate the principle operation on members.
