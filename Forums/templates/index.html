@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Forum Workshop</title>
-        <link rel="stylesheet" type="text/css" href="/static/style.css">
+        <link rel="stylesheet" type="text/css" href="{{url_for("static", filename="style.css")}}">
     </head>
     <body>
         <header>
@@ -26,8 +26,12 @@
             <section class="topics">
                 {% for post in posts %}
                 <p>
-                    <cite><a href="">{{post.title}}</a></cite>
-                    <br><span class="member">Member01 posted on {{post.date.strftime("%a %d-%m-%Y %H:%M")}}
+                    <cite>
+                        <a href="">{{post.title}}</a>
+                    </cite>
+                    <br>
+                    <span class="member">
+                        {{members.get_by_id(post.member_id).name}} posted on {{post.date.strftime("%a %d-%m-%Y %H:%M")}}
                     </span>
                 </p>
                 {% endfor %}
