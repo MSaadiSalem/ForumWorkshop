@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-import models
+from forums import models
 
 dummy_members = [
     models.Member("Mohammed", 20),
