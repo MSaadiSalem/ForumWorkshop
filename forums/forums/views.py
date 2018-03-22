@@ -1,9 +1,16 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-from flask import render_template
+import random
 
-from forums import app, db_con
+from flask import (redirect,
+                   render_template,
+                   request,
+                   url_for)
+
+from forums import (app,
+                    db_con,
+                    models)
 
 
 @app.route("/")
@@ -12,3 +19,18 @@ def home():
     return render_template("index.html",
                            posts=db_con.post_store.get_all(),
                            members=db_con.member_store)
+
+
+@app.route("/topic/add", methods=["GET", "POST"])
+def add_topic():
+    if request.method == "POST":
+        if request.form["submit"] == "Add":
+            new_post = models.Post(request.form["topic_title"],
+                                   request.form["topic_content"],
+                                   member_id=random.randint(1, 3))
+            db_con.post_store.add(new_post)
+            return redirect(url_for("home"))
+        else:
+            return redirect(url_for("home"))
+    else:
+        return render_template("add_topic.html")
