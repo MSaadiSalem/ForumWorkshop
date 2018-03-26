@@ -16,7 +16,9 @@ from forums import (app,
 @app.route("/")
 @app.route("/index/")
 def home():
+    title = "OMAC - All Topics"
     return render_template("index.html",
+                           title=title,
                            posts=db_con.post_store.get_all(),
                            members=db_con.member_store)
 
@@ -33,4 +35,5 @@ def add_topic():
         else:
             return redirect(url_for("home"))
     else:
-        return render_template("add_topic.html")
+        title = "OMAC - Add Topic"
+        return render_template("add_topic.html", title=title)

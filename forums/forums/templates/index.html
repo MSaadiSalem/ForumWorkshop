@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Forum Workshop</title>
+        <title>{{ title }}</title>
         <link rel="stylesheet" type="text/css" href="{{url_for("static", filename="style.css")}}">
     </head>
     <body>
@@ -17,6 +17,7 @@
             <a href="">PROFILE</a>
         </nav>
         <main>
+            {% block topics %}
             <section>
                 <nav class="sub-nav">
                     <a class="sub-links sub-active">All Topics</a>
@@ -36,6 +37,7 @@
                 </p>
                 {% endfor %}
             </section>
+            {% endblock %}
         </main>
         <footer>
             <p>&copy; Copyright 2018 by OMAC Full Stack Workshop</p>
